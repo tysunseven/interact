@@ -8,7 +8,7 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    
+
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
@@ -21,7 +21,11 @@ jobs:
     - name: Install dependencies
       run: |
         pip install voila ipywidgets matplotlib
-        
+    
+    - name: Create output directory
+      run: |
+        mkdir -p ./output  # 确保输出目录存在
+    
     - name: Run Voila and save the output
       run: |
         voila quadratic_function.ipynb --template=lab --no-browser --port=8888 &
@@ -32,7 +36,7 @@ jobs:
         git config --global user.name "Your Name"
         git config --global user.email "your-email@example.com"
         git checkout -b gh-pages  # 切换到gh-pages分支
-        cp -r /path/to/voila/output/* ./  # 将Voila的输出复制到当前目录
+        cp -r ./output/* ./  # 将Voila的输出复制到当前目录
         git add .
         git commit -m "Deploy Voila app"
         git push --force origin gh-pages
