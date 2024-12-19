@@ -35,7 +35,7 @@ jobs:
       run: |
         git config --global user.name "tysunseven"  # 替换为你的GitHub用户名
         git config --global user.email "tysun@mail.ustc.edu.cn"  # 替换为你的GitHub邮箱
-        git remote set-url origin https://x-access-token:${{ secrets.GH_TOKEN }}@github.com/${{ github.repository }}.git  # 使用GH_TOKEN进行身份验证
+        git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git  # 使用GITHUB_TOKEN进行身份验证
 
     - name: Upload to GitHub Pages
       run: |
@@ -43,4 +43,4 @@ jobs:
         cp -r ./output/* ./  # 将Voila的输出复制到当前目录
         git add .
         git commit -m "Deploy Voila app"
-        git push --force origin gh-pages  # 使用GH_TOKEN推送到gh-pages分支
+        git push --force origin gh-pages  # 使用GITHUB_TOKEN推送到gh-pages分支
