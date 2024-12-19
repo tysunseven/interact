@@ -31,12 +31,16 @@ jobs:
         voila quadratic_function.ipynb --template=lab --no-browser --port=8888 --output=./output &  # 使用--output指定目录
         sleep 10  # 等待Voila启动
 
-    - name: Upload to GitHub Pages
+    - name: Set up GitHub authentication
       run: |
         git config --global user.name "Your Name"
         git config --global user.email "your-email@example.com"
+        git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git  # 使用GitHub Token进行身份验证
+
+    - name: Upload to GitHub Pages
+      run: |
         git checkout -b gh-pages  # 切换到gh-pages分支
         cp -r ./output/* ./  # 将Voila的输出复制到当前目录
         git add .
         git commit -m "Deploy Voila app"
-        git push --force origin gh-pages
+        git push --force origin gh-pages  # 推送到gh-pages分支
